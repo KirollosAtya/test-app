@@ -1,0 +1,23 @@
+<div class="container mt-3">
+  <h3>{{ isEdit ? 'Edit' : 'Create' }} Category</h3>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="mb-3">
+      <label>Name</label>
+      <input type="text" class="form-control" formControlName="name" />
+    </div>
+    <input type="hidden" formControlName="id" />
+    <div class="mb-3">
+      <label>Description</label>
+      <input type="text" class="form-control" formControlName="description" />
+    </div>
+
+    <div class="mb-3">
+      <label>Image URL</label>
+      <input type="text" class="form-control" formControlName="imageUrl" />
+    </div>
+
+    <button class="btn btn-success" type="submit">Save</button>
+    <a routerLink="/categories" class="btn btn-secondary ms-2">Cancel</a>
+  </form>
+</div>

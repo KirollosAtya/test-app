@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center align-items-start mt-5">
+  <div class="card shadow" style="width: 100%; max-width: 900px;">
+    <div class="card-header d-flex justify-content-between align-items-center bg-success text-white">
+      <h4 class="mb-0">📋 Categories</h4>
+      <button class="btn btn-light btn-sm" (click)="router.navigate(['/categories/new'])">
+        ➕ Add Category
+      </button>
+    </div>
+
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover m-0">
+          <thead class="table-light text-center">
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th style="width: 150px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of categories || []" class="align-middle">
+              <td>{{ category.name }}</td>
+              <td>{{ category.description }}</td>
+              <td class="text-center">
+                <img *ngIf="category.imageUrl" [src]="category.imageUrl" class="img-thumbnail" style="max-width: 70px;" />
+              </td>
+              <td class="text-center">
+                <button class="btn btn-outline-warning btn-sm me-2" (click)="edit(category.id)">✏️</button>
+                <button class="btn btn-outline-danger btn-sm" (click)="delete(category.id)">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="categories?.length === 0" class="p-3 text-center text-muted">
+        <i class="bi bi-info-circle"></i> No categories found.
+      </div>
+    </div>
+  </div>
+</div>
