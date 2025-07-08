@@ -13,20 +13,46 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoryList {
  categories: Category[] = [];
+  totalCount = 0;
 
+  page = 1;
+  size = 5;
+  search = '';
+  sortBy = 'id';
+  isDescending = false;
   constructor(private categoryService: CategoryService, public router: Router) {}
 
   ngOnInit(): void {
     this.loadCategories();
   }
 
-  loadCategories() {
-    this.categoryService.getAll().subscribe(res => {
-      console.log(res)
-      this.categories = res;
-    });
+   loadCategories() {
+    this.categoryService
+      .getPaginated(this.page, this.size, this.search, this.sortBy, this.isDescending)
+      .subscribe((res) => {
+         console.log(res.collections);
+        this.categories = res.collections;
+        this.totalCount = res.totalCount;
+      });
+     
   }
-
+  onSearchChange(event: any) {
+    this.search = event.target.value;
+    this.page = 1;
+    this.loadCategories();
+  }
+    changeSort(field: string) {
+    if (this.sortBy === field) this.isDescending = !this.isDescending;
+    else {
+      this.sortBy = field;
+      this.isDescending = false;
+    }
+    this.loadCategories();
+  }
+   changePage(newPage: number) {
+    this.page = newPage;
+    this.loadCategories();
+  }
   edit(id: number) {
     this.router.navigate(['/categories/edit', id]);
   }
